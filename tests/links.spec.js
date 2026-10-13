@@ -48,6 +48,26 @@ test('shows a "no links yet" message when the data file is blank', async ({ page
   await expect(page.getByText('No links yet')).toBeVisible();
 });
 
+test('shows an error message when the data file is malformed', async ({ page }) => {
+  await page.route('**/links.json', (route) =>
+    route.fulfill({ body: '[{ "label": "Broken", ', contentType: 'application/json' }),
+  );
+
+  await page.goto('/');
+
+  await expect(page.getByRole('alert')).toHaveText("Couldn't load links.");
+  await expect(page.getByText('No links yet')).toBeHidden();
+});
+
+test('shows an error message when the data file is missing', async ({ page }) => {
+  await page.route('**/links.json', (route) => route.fulfill({ status: 404, body: 'Not found' }));
+
+  await page.goto('/');
+
+  await expect(page.getByRole('alert')).toHaveText("Couldn't load links.");
+  await expect(page.getByText('No links yet')).toBeHidden();
+});
+
 test('renders the real links data file', async ({ page }) => {
   /** @type {Link[]} */
   const links = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'links.json'), 'utf8'));

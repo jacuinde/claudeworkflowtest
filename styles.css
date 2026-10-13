@@ -5,6 +5,7 @@
   --accent: #0b6bcb;
   --surface: #ffffff;
   --border: #d8dee4;
+  --danger: #cf222e;
 }
 
 *,
@@ -59,4 +60,8 @@ h1 {
 
 #no-links {
   color: var(--muted);
+}
+
+#load-error {
+  color: var(--danger);
 }

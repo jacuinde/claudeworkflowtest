@@ -21,14 +21,26 @@ function renderLinks(list, emptyMessage, links) {
   );
 }
 
+/** @returns {Promise<Link[]>} */
+async function loadLinks() {
+  const response = await fetch('links.json');
+  if (!response.ok) {
+    throw new Error(`links.json responded ${response.status}`);
+  }
+  const text = await response.text();
+  return text.trim() === '' ? [] : JSON.parse(text);
+}
+
 async function main() {
   const list = /** @type {HTMLUListElement} */ (document.getElementById('links'));
   const emptyMessage = /** @type {HTMLElement} */ (document.getElementById('no-links'));
-  const response = await fetch('links.json');
-  const text = await response.text();
-  /** @type {Link[]} */
-  const links = text.trim() === '' ? [] : JSON.parse(text);
-  renderLinks(list, emptyMessage, links);
+  const loadError = /** @type {HTMLElement} */ (document.getElementById('load-error'));
+  try {
+    renderLinks(list, emptyMessage, await loadLinks());
+  } catch (error) {
+    console.error('Failed to load links:', error);
+    loadError.hidden = false;
+  }
 }
 
 main();
