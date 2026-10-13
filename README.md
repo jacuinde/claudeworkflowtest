@@ -31,6 +31,10 @@ Links live in `links.json`, a JSON array of `{ "label", "url" }` objects. The pa
 
 The search box above the list filters links as you type. A link stays visible if its label or URL contains the search text, ignoring case and surrounding spaces. Clearing the box shows every link again; if nothing matches, the page says "No matches."
 
+## Theme
+
+The page follows your operating system's light/dark setting until you press the **Dark theme** button in the header. Your choice is saved in the browser (`localStorage`) and wins over the OS setting on later visits. Both themes meet the WCAG AA contrast ratio for text (4.5:1), which the tests check.
+
 ## Run the tests
 
 ```sh
