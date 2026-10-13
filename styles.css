@@ -58,10 +58,27 @@ h1 {
   border-color: var(--accent);
 }
 
-#no-links {
+#no-links,
+#no-matches {
   color: var(--muted);
 }
 
 #load-error {
   color: var(--danger);
+}
+
+#search {
+  width: 100%;
+  margin: 0 0 1rem;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+#search:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
 }

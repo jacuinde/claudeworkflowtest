@@ -27,6 +27,10 @@ This serves the site at http://localhost:4173 and opens it in your browser. Serv
 
 Links live in `links.json`, a JSON array of `{ "label", "url" }` objects. The page shows them in file order; add, remove, or reorder entries there with no HTML changes. An empty array (or a blank file) shows a "No links yet" message. If the file is missing or isn't valid JSON, the page shows "Couldn't load links." and logs the cause to the browser console.
 
+## Search
+
+The search box above the list filters links as you type. A link stays visible if its label or URL contains the search text, ignoring case and surrounding spaces. Clearing the box shows every link again; if nothing matches, the page says "No matches."
+
 ## Run the tests
 
 ```sh

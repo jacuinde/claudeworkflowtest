@@ -2,15 +2,7 @@
 const { test, expect } = require('@playwright/test');
 const fs = require('node:fs');
 const path = require('node:path');
-
-/**
- * Serve `links` in place of the real data file for this page.
- * @param {import('@playwright/test').Page} page
- * @param {unknown} links
- */
-async function serveLinks(page, links) {
-  await page.route('**/links.json', (route) => route.fulfill({ json: links }));
-}
+const { serveLinks, visibleLinks } = require('./helpers');
 
 test('renders every link from the data file, in order, with its label and URL', async ({ page }) => {
   await serveLinks(page, [
@@ -21,7 +13,7 @@ test('renders every link from the data file, in order, with its label and URL', 
 
   await page.goto('/');
 
-  const links = page.getByRole('list', { name: 'Links' }).getByRole('link');
+  const links = visibleLinks(page);
   await expect(links).toHaveText(['Zeta docs', 'Alpha blog', 'Mid tools']);
   await expect(links.nth(0)).toHaveAttribute('href', 'https://zeta.example/');
   await expect(links.nth(1)).toHaveAttribute('href', 'https://alpha.example/blog');
@@ -74,7 +66,5 @@ test('renders the real links data file', async ({ page }) => {
 
   await page.goto('/');
 
-  await expect(page.getByRole('list', { name: 'Links' }).getByRole('link')).toHaveText(
-    links.map((link) => link.label),
-  );
+  await expect(visibleLinks(page)).toHaveText(links.map((link) => link.label));
 });

@@ -21,6 +21,25 @@ function renderLinks(list, emptyMessage, links) {
   );
 }
 
+/**
+ * Hide every list item whose link label and URL don't contain `query`.
+ * @param {HTMLUListElement} list
+ * @param {string} query
+ * @returns {number} how many items still match
+ */
+function filterLinks(list, query) {
+  const needle = query.trim().toLowerCase();
+  let matches = 0;
+  for (const item of list.children) {
+    const anchor = /** @type {HTMLAnchorElement} */ (item.querySelector('a'));
+    const fields = [anchor.textContent ?? '', anchor.getAttribute('href') ?? ''];
+    const isMatch = fields.some((field) => field.toLowerCase().includes(needle));
+    /** @type {HTMLElement} */ (item).hidden = !isMatch;
+    if (isMatch) matches++;
+  }
+  return matches;
+}
+
 /** @returns {Promise<Link[]>} */
 async function loadLinks() {
   const response = await fetch('links.json');
@@ -35,8 +54,15 @@ async function main() {
   const list = /** @type {HTMLUListElement} */ (document.getElementById('links'));
   const emptyMessage = /** @type {HTMLElement} */ (document.getElementById('no-links'));
   const loadError = /** @type {HTMLElement} */ (document.getElementById('load-error'));
+  const search = /** @type {HTMLInputElement} */ (document.getElementById('search'));
+  const noMatches = /** @type {HTMLElement} */ (document.getElementById('no-matches'));
+  const applySearch = () => {
+    noMatches.hidden = filterLinks(list, search.value) > 0 || list.children.length === 0;
+  };
+  search.addEventListener('input', applySearch);
   try {
     renderLinks(list, emptyMessage, await loadLinks());
+    applySearch();
   } catch (error) {
     console.error('Failed to load links:', error);
     loadError.hidden = false;
