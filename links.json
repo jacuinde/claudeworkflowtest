@@ -1,0 +1,5 @@
+[
+  { "label": "GitHub", "url": "https://github.com" },
+  { "label": "MDN Web Docs", "url": "https://developer.mozilla.org" },
+  { "label": "Playwright", "url": "https://playwright.dev" }
+]

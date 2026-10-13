@@ -23,6 +23,10 @@ npm start
 
 This serves the site at http://localhost:4173 and opens it in your browser. Serve it rather than opening `index.html` directly from disk, since later features load data files that browsers block over `file://`.
 
+## Edit the links
+
+Links live in `links.json`, a JSON array of `{ "label", "url" }` objects. The page shows them in file order; add, remove, or reorder entries there with no HTML changes. An empty array (or a blank file) shows a "No links yet" message.
+
 ## Run the tests
 
 ```sh

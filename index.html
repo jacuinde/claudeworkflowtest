@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Links</title>
     <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
   </head>
   <body>
     <main>
-      <h1>Links</h1>
+      <h1 id="page-title">Links</h1>
+      <ul id="links" aria-labelledby="page-title"></ul>
+      <p id="no-links" hidden>No links yet. Add one to <code>links.json</code>.</p>
     </main>
   </body>
 </html>
