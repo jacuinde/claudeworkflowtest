@@ -56,8 +56,13 @@ async function main() {
   const loadError = /** @type {HTMLElement} */ (document.getElementById('load-error'));
   const search = /** @type {HTMLInputElement} */ (document.getElementById('search'));
   const noMatches = /** @type {HTMLElement} */ (document.getElementById('no-matches'));
+  const matchCount = /** @type {HTMLElement} */ (document.getElementById('match-count'));
   const applySearch = () => {
-    noMatches.hidden = filterLinks(list, search.value) > 0 || list.children.length === 0;
+    const total = list.children.length;
+    const matches = filterLinks(list, search.value);
+    noMatches.hidden = matches > 0 || total === 0;
+    matchCount.hidden = total === 0;
+    matchCount.textContent = `Showing ${matches} of ${total} ${total === 1 ? 'link' : 'links'}`;
   };
   search.addEventListener('input', applySearch);
   try {

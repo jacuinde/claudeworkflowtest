@@ -68,6 +68,12 @@ h1 {
   border-color: var(--accent);
 }
 
+#match-count {
+  margin: -0.5rem 0 1rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
 #no-links,
 #no-matches {
   color: var(--muted);
