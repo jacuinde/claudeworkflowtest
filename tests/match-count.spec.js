@@ -16,7 +16,7 @@ function searchBox(page) {
 
 /** @param {import('@playwright/test').Page} page */
 function matchCount(page) {
-  return page.getByText(/^Showing \d+ of \d+ links$/);
+  return page.getByText(/^Showing \d+ of \d+ links?$/);
 }
 
 test('reads "Showing N of N links" when the search box is empty', async ({ page }) => {
@@ -48,6 +48,16 @@ test('counts only the links still visible as you type', async ({ page }) => {
 
   await searchBox(page).clear();
   await expect(matchCount(page)).toHaveText('Showing 4 of 4 links');
+});
+
+test('says "link" when there is only one link', async ({ page }) => {
+  await serveLinks(page, [{ label: 'GitHub', url: 'https://github.com' }]);
+  await page.goto('/');
+
+  await expect(matchCount(page)).toHaveText('Showing 1 of 1 link');
+
+  await searchBox(page).fill('zzz');
+  await expect(matchCount(page)).toHaveText('Showing 0 of 1 link');
 });
 
 test('is hidden when there are no links', async ({ page }) => {

@@ -62,7 +62,7 @@ async function main() {
     const matches = filterLinks(list, search.value);
     noMatches.hidden = matches > 0 || total === 0;
     matchCount.hidden = total === 0;
-    matchCount.textContent = `Showing ${matches} of ${total} links`;
+    matchCount.textContent = `Showing ${matches} of ${total} ${total === 1 ? 'link' : 'links'}`;
   };
   search.addEventListener('input', applySearch);
   try {
