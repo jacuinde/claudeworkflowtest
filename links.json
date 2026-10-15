@@ -2,5 +2,6 @@
   { "label": "GitHub", "url": "https://github.com" },
   { "label": "MDN Web Docs", "url": "https://developer.mozilla.org" },
   { "label": "Playwright", "url": "https://playwright.dev" },
-  { "label": "GitHub Docs", "url": "https://docs.github.com" }
+  { "label": "GitHub Docs", "url": "https://docs.github.com" },
+  { "label": "Claude Code docs", "url": "https://code.claude.com/docs" }
 ]
