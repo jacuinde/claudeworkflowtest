@@ -50,6 +50,18 @@ async function loadLinks() {
   return text.trim() === '' ? [] : JSON.parse(text);
 }
 
+/**
+ * @param {EventTarget | null} target
+ * @returns {boolean} whether keys pressed at `target` type text
+ */
+function isTextField(target) {
+  if (!(target instanceof HTMLElement)) return false;
+  if (target.isContentEditable || target instanceof HTMLTextAreaElement) return true;
+  if (!(target instanceof HTMLInputElement)) return false;
+  const nonTextTypes = ['button', 'checkbox', 'color', 'file', 'hidden', 'image', 'radio', 'range', 'reset', 'submit'];
+  return !nonTextTypes.includes(target.type);
+}
+
 async function main() {
   const list = /** @type {HTMLUListElement} */ (document.getElementById('links'));
   const emptyMessage = /** @type {HTMLElement} */ (document.getElementById('no-links'));
@@ -65,6 +77,12 @@ async function main() {
     matchCount.textContent = `Showing ${matches} of ${total} ${total === 1 ? 'link' : 'links'}`;
   };
   search.addEventListener('input', applySearch);
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== '/' || event.ctrlKey || event.metaKey || event.altKey) return;
+    if (isTextField(event.target)) return;
+    event.preventDefault();
+    search.focus();
+  });
   try {
     renderLinks(list, emptyMessage, await loadLinks());
     applySearch();
