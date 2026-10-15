@@ -3,5 +3,6 @@
   { "label": "MDN Web Docs", "url": "https://developer.mozilla.org" },
   { "label": "Playwright", "url": "https://playwright.dev" },
   { "label": "GitHub Docs", "url": "https://docs.github.com" },
+  { "label": "Pro Git book", "url": "https://git-scm.com/book" },
   { "label": "Claude Code docs", "url": "https://code.claude.com/docs" }
 ]
