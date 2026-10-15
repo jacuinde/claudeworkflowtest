@@ -68,3 +68,11 @@ test('renders the real links data file', async ({ page }) => {
 
   await expect(visibleLinks(page)).toHaveText(links.map((link) => link.label));
 });
+
+test('ends with the Claude Code docs link', async ({ page }) => {
+  await page.goto('/');
+
+  const last = visibleLinks(page).last();
+  await expect(last).toHaveText('Claude Code docs');
+  await expect(last).toHaveAttribute('href', 'https://code.claude.com/docs');
+});
